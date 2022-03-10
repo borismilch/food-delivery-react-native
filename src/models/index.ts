@@ -1,0 +1,5 @@
+export type { ICategory } from './ICategory'
+export type { IRestaurant } from './IRestaurant'
+export type { ITab } from './ITab'
+export type { IFood } from './IFood'
+export type { IOrder } from './IOrer'
