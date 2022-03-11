@@ -1,8 +1,7 @@
 import { IRestaurant } from "../models"
 
 const YIELP_CLIENT_ID = "A3rgMCfkzjYqQTD22lnWxg"
-const YIELP_CLIENT_SECRET = "S88o3-9NZxpE_prsTCahK8oJd0QvLQLkRNnzuenaa_rt97z_XKXEAdHzeW6B4PchKqRh3_9dlAo7DYQ4ZSywDSE9UZsYMZdJ5ZHdwuCAZDO9auVtk2GEFFZW990oYnYx"
-
+const YIELP_CLIENT_SECRET = "hr3bo31vmGX7fcMKe89aZSyYws0iKyHjru6Ao4cpjvjoZWl_ws7xL8nnHUmWJ2IX6lyhBShFwvXmx5kYp6l98FIMwUMtMpxQFHn8bEWFC-alFD-vNPv5ZHZsPt8qYnYx"
 const apiOptions = {
   headers: {
     Authorization: "Bearer " + YIELP_CLIENT_SECRET

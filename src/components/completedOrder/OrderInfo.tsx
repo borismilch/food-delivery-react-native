@@ -1,20 +1,34 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { RouteProp, useRoute } from '@react-navigation/native'
 import { IOrder } from '../../models'
 
-const OrderInfo = () => {
+interface OrderInfoProps {
+  restaurant: string,
+  totalPrice: number
+}
 
-  const {params} = useRoute<RouteProp<{order: IOrder}>>(props)
-  const {   } = []
-  
+const OrderInfo: React.FC<OrderInfoProps> = (props) => {
+  const { restaurant, totalPrice } = props
+
   return (
-    <View>
-      <Text>OrderInfo</Text>
+    <View style={styles.wrapper}>
+       <Text style={styles.text}>
+         Your order at {restaurant} has been placed for {"$" + totalPrice }
+       </Text>
     </View>
   )
 }
 
-export default OrderInfo
+export default React.memo(OrderInfo)
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  wrapper: {
+    padding: 30,
+   
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center"
+  }
+})

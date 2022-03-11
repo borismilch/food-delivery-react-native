@@ -6,10 +6,10 @@ import { ScrollView } from 'react-native-gesture-handler'
 
 const Menu = () => {
   return (
-    <ScrollView style={{paddingTop: 10}} showsVerticalScrollIndicator={false}>
+    <ScrollView style={{paddingTop: 10, paddingBottom: 100}} showsVerticalScrollIndicator={false}>
       {
         fakeFood.map((item, idx) => (
-          <MenuItem index={idx} key={idx} food={item} />
+          <MenuItem key={idx} food={item} />
         ))
       }
     </ScrollView>

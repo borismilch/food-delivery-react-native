@@ -3,12 +3,15 @@ import React from 'react'
 import { RouteProp, useRoute } from '@react-navigation/native'
 import { IOrder, IRestaurant } from '../../../../models'
 import { OrderItem } from '..'
-import { useAppSelector } from '../../../../hooks/redux'
+import { useAppSelector, useAppDispatch } from '../../../../hooks/redux'
 import { cartItemsSelector, totalPrice } from '../../../../store/selectors'
 import { styles } from './OrderModalStyle'
 import { OrderService } from  '../../../../service'
 import { serverTimestamp } from 'firebase/firestore'
 import { useRouting } from '../../../../hooks/index'
+import { CartStore } from '../../../../store/actions'
+import { useState } from 'react'
+import { OrderLoader } from '..'
 
 interface OrderModalProps {
   onPress: () => void
@@ -18,11 +21,14 @@ const OrderModal:React.FC<OrderModalProps> = (props) => {
   const { onPress } = props
   const { params } = useRoute<RouteProp<{params:{ restaurant: IRestaurant}}>>()
   const { navigateTo } = useRouting()
+  const [loading, setLoading] = useState<boolean>(false) 
+
+  const dispatch = useAppDispatch()
 
   const orderItems= useAppSelector(cartItemsSelector)
   const total = useAppSelector(totalPrice)
 
-  const createNewOrder = async () => {
+  const createNewOrder = () => {
     const newOrder: IOrder = {
       createdAt: serverTimestamp() as any,
       items: Object.values(orderItems),
@@ -31,12 +37,19 @@ const OrderModal:React.FC<OrderModalProps> = (props) => {
       totalPrice: +total
     } 
 
-    await OrderService.addOrder(newOrder)
-    onPress()
-    navigateTo("completed", {order: newOrder})()
+    setLoading(true)
+
+    setTimeout(async() => {
+      await OrderService.addOrder(newOrder)
+      dispatch(CartStore.clearAllItems())
+      onPress()
+      setLoading(false)
+      navigateTo("completed", {order: newOrder})()
+    }, 1500)
   }
 
   return (
+    <>
     <View style={styles.modalContainer}>
        
       <View style={styles.modalCheckoutContainer}>
@@ -47,8 +60,8 @@ const OrderModal:React.FC<OrderModalProps> = (props) => {
         </Text>
 
         {
-          Object.values(orderItems).map(item => (
-           <OrderItem item={item} />
+          Object.values(orderItems).map((item, idx) => (
+           <OrderItem key={item.title + idx.toString()} item={item} />
           ))
         }
        
@@ -72,6 +85,9 @@ const OrderModal:React.FC<OrderModalProps> = (props) => {
 
       </View>
     </View>
+
+     {loading && <OrderLoader />}
+    </>
   )
 }
 

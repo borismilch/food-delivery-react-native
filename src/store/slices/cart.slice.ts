@@ -13,13 +13,12 @@ const slice =  createSlice({
   name: "CardSlice",
   initialState,
   reducers: {
-    addItemsToCart: (state, action: PayloadAction<IFood>) => {
-      console.log(action, state.cartItems, state.cartItems.length)
-      state.cartItems[action.payload.title] = action.payload
+    addItemsToCart: (state, action: PayloadAction<[IFood, string]>) => {
+      state.cartItems[action.payload[0].title + action.payload[1] ] = action.payload[0]
     },
     removeItemFromCart: (state, action: PayloadAction<string>) => {
       delete state.cartItems[action.payload]
-     
+      console.log(action.payload)
     },
 
     clearAllItems: (state) => {
