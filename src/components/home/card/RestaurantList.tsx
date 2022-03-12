@@ -17,9 +17,9 @@ const RestaurantList = () => {
   const  location = useAppSelector(locationSelector)
 
   const fetchRestaurants = async () => {
-    const data = {businesses: fakeRestaurants} //await RestaurantService.getRestaugants(location)  
+    const data = await RestaurantService.getRestaugants(location)  
 
-    setRestaurants(data.businesses)
+    setRestaurants(data?.businesses || fakeRestaurants)
   }
   
   useEffect(() => {

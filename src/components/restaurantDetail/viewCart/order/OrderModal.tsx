@@ -7,11 +7,11 @@ import { useAppSelector, useAppDispatch } from '../../../../hooks/redux'
 import { cartItemsSelector, totalPrice } from '../../../../store/selectors'
 import { styles } from './OrderModalStyle'
 import { OrderService } from  '../../../../service'
-import { serverTimestamp } from 'firebase/firestore'
 import { useRouting } from '../../../../hooks/index'
 import { CartStore } from '../../../../store/actions'
 import { useState } from 'react'
 import { OrderLoader } from '..'
+import { auth } from '../../../../lib/firebase'
 
 interface OrderModalProps {
   onPress: () => void
@@ -24,17 +24,18 @@ const OrderModal:React.FC<OrderModalProps> = (props) => {
   const [loading, setLoading] = useState<boolean>(false) 
 
   const dispatch = useAppDispatch()
-
   const orderItems= useAppSelector(cartItemsSelector)
   const total = useAppSelector(totalPrice)
 
   const createNewOrder = () => {
     const newOrder: IOrder = {
-      createdAt: serverTimestamp() as any,
+      createdAt: Date.now(),
       items: Object.values(orderItems),
-      receiver: "annonymus",
+      receiver: auth?.currentUser?.uid + "",
       restaurant: params.restaurant.name,
-      totalPrice: +total
+      restaurantImage: params.restaurant.image_url,
+      totalPrice: +total,
+      id: ""
     } 
 
     setLoading(true)
@@ -51,7 +52,6 @@ const OrderModal:React.FC<OrderModalProps> = (props) => {
   return (
     <>
     <View style={styles.modalContainer}>
-       
       <View style={styles.modalCheckoutContainer}>
         <Text 
           style={styles.restaurantName}
@@ -86,7 +86,7 @@ const OrderModal:React.FC<OrderModalProps> = (props) => {
       </View>
     </View>
 
-     {loading && <OrderLoader />}
+     {loading && <OrderLoader  />}
     </>
   )
 }

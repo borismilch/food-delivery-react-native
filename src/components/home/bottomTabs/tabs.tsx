@@ -1,6 +1,6 @@
 import { ITab } from "../../../models";
-import { Ionicons } from '@expo/vector-icons'
 import FontAwesome  from 'react-native-vector-icons/FontAwesome5'
+
 
 export const tabs: ITab[] = [
   {
@@ -13,13 +13,13 @@ export const tabs: ITab[] = [
    
     ActiveIcon: <FontAwesome size={25} name="search" />,
     text: "Search",
-    to: "search"
+    to: "home"
   },
   {
   
     ActiveIcon: <FontAwesome size={25} name="shopping-bag" />,
     text: "Grocery",
-    to: "grocery"
+    to: "home"
   }, 
   {
    
@@ -27,9 +27,5 @@ export const tabs: ITab[] = [
     text: "Orders",
     to: "orders"
   },  
-  {
-    ActiveIcon: <FontAwesome size={25} name="user" />,
-    text: "Account",
-    to: "account"
-  },
+ 
 ]

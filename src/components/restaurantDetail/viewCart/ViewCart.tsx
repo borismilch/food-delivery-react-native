@@ -2,14 +2,13 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 
-import { RouteProp, useRoute } from '@react-navigation/native'
-import { useRouting } from '../../../hooks'
-import { IRestaurant } from '../../../models'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useAppSelector } from '../../../hooks/redux'
-import { cartItemsSelector, totalPrice } from '../../../store/selectors'
+import { totalPrice } from '../../../store/selectors'
 import { OrderModalContent } from './'
 
+import Toast from 'react-native-toast-message'
+import { useAuthState } from '../../../hooks'
 import { ModalContainer } from '../../'
 
 const ViewCard = () => {
@@ -17,12 +16,25 @@ const ViewCard = () => {
   const closeModal = () => setModalOpen(false)
   const openModal = () => setModalOpen(true)
 
-  const { params } = useRoute<RouteProp<{restaurant: IRestaurant}>>()
-  const { navigateTo } = useRouting()
-
-  const cartItems = useAppSelector(cartItemsSelector)
   const total = useAppSelector(totalPrice)
   const hasItems = +total > 0
+
+  const { user } = useAuthState()
+
+  const startOperation = () => {
+    if (!user) {
+      console.log("toast")
+      Toast.show({
+        type: 'error',
+        text1: 'Acess denied',
+        text2: 'You are unauthorised, please sign in first to make an order'
+      })
+
+      return 
+    }
+    openModal()
+
+  }
 
   return (
     <>
@@ -45,7 +57,7 @@ const ViewCard = () => {
         }
       }>
         <View style={styles.container}>
-          <TouchableOpacity onPress={openModal} style={styles.wrapper}>
+          <TouchableOpacity onPress={startOperation} style={styles.wrapper}>
             <Text style={styles.text}>{!modalOpen ?  "View cart" : "Hide cart" }</Text>
             <Text style={styles.total}>{"$" + total}</Text>
           </TouchableOpacity>

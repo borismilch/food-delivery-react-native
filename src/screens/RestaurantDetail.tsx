@@ -3,10 +3,13 @@ import React from 'react'
 import { About } from '../components/restaurantDetail'
 import { Divider } from 'react-native-elements'
 import { Menu, ViewCart } from '../components'
+import { GoBack } from '../components/reusable'
 
 const RestaurantDetail = () => {
   return (
     <View style={styles.wrapper}>
+      <GoBack />
+
       <About />
       <Divider width={1} />
 

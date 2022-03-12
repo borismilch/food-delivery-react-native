@@ -1,10 +1,24 @@
 import { StyleSheet, View, SafeAreaView, Platform, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import HeaderTabs from '../components/home/header/Tabs'
 import { SearchBar, Categories, RestaurantList, BottomTabs } from '../components'
 import { Divider }  from 'react-native-elements'
+import { RouteProp, useRoute } from '@react-navigation/native'
+import Toast from 'react-native-toast-message'
 
 const HomeScreen = () => {
+
+  const { params } = useRoute<RouteProp<{params: {greet: { title: string }}}>>()
+
+  useEffect(() => {
+    if (params?.greet) {
+      Toast.show({
+        type: "success",
+        text1: params.greet.title
+      })
+    }
+  }, [])
+
   return (
     <SafeAreaView style={styles.vedroidSafeArea}>
 

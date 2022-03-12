@@ -1,3 +1,7 @@
 export { default as HomeScreen } from './HomeScreen'
 export { default as RestaurantDetailScreen } from './RestaurantDetail'
 export { default as OrderCompletedScreen } from './OrderCompletedScreen'
+export { default as LoginScreen } from './LoginScreen'
+export { default as RegisterScreen } from './RegisterScreen'
+export { default as AccountScreen } from './AccountScreen'
+export { default as OrdersScreen } from './OrderScreen'

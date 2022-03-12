@@ -17,13 +17,13 @@ const OrderCompletedScreen = () => {
         speed={0.5} 
         source={require("../assets/animations/check-mark.json")} 
         autoPlay 
+        loop={false}
       />
 
       <OrderInfo restaurant={params.order.restaurant} totalPrice={params.order.totalPrice} />
       <OrderItems orderedFood={params.order.items} />
       <OrderGoBack />
       
-
       <LottieView 
         style={styles.check} 
         speed={0.5} 
